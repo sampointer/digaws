@@ -22,7 +22,7 @@ type Ranges struct {
 	SyncTokenRaw  string       `json:"syncToken"`
 }
 
-// PrefixIPv4 holds the detail of a given AWS IPv6 prefix
+// PrefixIPv4 holds the detail of a given AWS IPv4 prefix
 type PrefixIPv4 struct {
 	IPPrefix           string `json:"ip_prefix"`
 	Region             string `json:"region"`
