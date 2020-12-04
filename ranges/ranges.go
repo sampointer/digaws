@@ -14,28 +14,36 @@ const url string = "https://ip-ranges.amazonaws.com/ip-ranges.json"
 
 // Ranges represents an https://ip-ranges.amazonaws.com/ip-ranges.json document
 type Ranges struct {
-	CreateDateRaw string    `json:"createDate"`
-	CreateDate    time.Time `json:"-"`
-	Prefixes      []Prefix  `json:"prefixes"`
-	IPv6Prefixes  []Prefix  `json:"ipv6_prefixes"`
-	SyncTokenRaw  string    `json:"syncToken"`
-	SyncToken     time.Time `json:"-"`
+	CreateDate    time.Time    `json:"-"`
+	CreateDateRaw string       `json:"createDate"`
+	PrefixesIPv4  []PrefixIPv4 `json:"prefixes"`
+	PrefixesIPv6  []PrefixIPv6 `json:"ipv6_prefixes"`
+	SyncToken     time.Time    `json:"-"`
+	SyncTokenRaw  string       `json:"syncToken"`
 }
 
-// Prefix holds the detail of a given AWS prefix
-type Prefix struct {
+// PrefixIPv4 holds the detail of a given AWS IPv6 prefix
+type PrefixIPv4 struct {
 	IPPrefix           string `json:"ip_prefix"`
 	Region             string `json:"region"`
 	Service            string `json:"service"`
 	NetworkBorderGroup string `json:"network_border_group"`
 }
 
-// FindForIP returns the Prefix structs that contain a range that includes the
-// passed IP address
-func (r *Ranges) FindForIP(ip net.IP) ([]Prefix, error) {
-	var results []Prefix
+// PrefixIPv6 holds the detail of a given AWS IPv6 prefix
+type PrefixIPv6 struct {
+	IPPrefix           string `json:"ipv6_prefix"`
+	Region             string `json:"region"`
+	Service            string `json:"service"`
+	NetworkBorderGroup string `json:"network_border_group"`
+}
 
-	for _, p := range r.Prefixes {
+// FindForIPv4 returns the Prefix structs that contain a range that includes the
+// passed IPv4 address
+func (r *Ranges) FindForIPv4(ip net.IP) ([]PrefixIPv4, error) {
+	var results []PrefixIPv4
+
+	for _, p := range r.PrefixesIPv4 {
 		_, pIPNet, err := net.ParseCIDR(p.IPPrefix)
 		if err != nil {
 			return nil, err
