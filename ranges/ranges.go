@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"net"
 	"net/http"
 	"strconv"
 	"time"
@@ -27,6 +28,25 @@ type Prefix struct {
 	Region             string `json:"region"`
 	Service            string `json:"service"`
 	NetworkBorderGroup string `json:"network_border_group"`
+}
+
+// FindForIP returns the Prefix structs that contain a range that includes the
+// passed IP address
+func (r *Ranges) FindForIP(ip net.IP) ([]Prefix, error) {
+	var results []Prefix
+
+	for _, p := range r.Prefixes {
+		_, pIPNet, err := net.ParseCIDR(p.IPPrefix)
+		if err != nil {
+			return nil, err
+		}
+
+		if pIPNet.Contains(ip) {
+			results = append(results, p)
+		}
+	}
+
+	return results, nil
 }
 
 //New is a constructor for Ranges
