@@ -34,4 +34,12 @@ func TestRanges(t *testing.T) {
 		require.NoError(t, err)
 		require.Equal(t, prefix, results[0])
 	})
+
+	t.Run("returns no Prefix struct for invalid IPv4 address", func(t *testing.T) {
+		ip := net.ParseIP("1.2.3.4")
+		results, err := ranges.FindForIP(ip)
+		require.NoError(t, err)
+		require.Zero(t, len(results))
+	})
+
 }
