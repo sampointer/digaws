@@ -13,20 +13,20 @@ const url string = "https://ip-ranges.amazonaws.com/ip-ranges.json"
 
 // Ranges represents an https://ip-ranges.amazonaws.com/ip-ranges.json document
 type Ranges struct {
-	CreateDate       string `json:createDate`
-	CreateDateParsed time.Time
-	Prefixes         []Prefix `json:prefixes`
-	IPv6Prefixes     []Prefix `json:ipv6_prefixes`
-	SyncToken        string   `json:syncToken`
-	SyncTokenParsed  time.Time
+	CreateDateRaw string    `json:"createDate"`
+	CreateDate    time.Time `json:"-"`
+	Prefixes      []Prefix  `json:"prefixes"`
+	IPv6Prefixes  []Prefix  `json:"ipv6_prefixes"`
+	SyncTokenRaw  string    `json:"syncToken"`
+	SyncToken     time.Time `json:"-"`
 }
 
 // Prefix holds the detail of a given AWS prefix
 type Prefix struct {
-	IPPrefix           string `json:ip_prefix`
-	Region             string `json:region`
-	Service            string `json:service`
-	NetworkBorderGroup string `json:network_border_group`
+	IPPrefix           string `json:"ip_prefix"`
+	Region             string `json:"region"`
+	Service            string `json:"service"`
+	NetworkBorderGroup string `json:"network_border_group"`
 }
 
 //New is a constructor for Ranges
@@ -49,23 +49,23 @@ func New(client *http.Client) (*Ranges, error) {
 		return nil, err
 	}
 
-	d, err := parseCreateDate(&ranges.CreateDate)
+	d, err := parseCreateDate(&ranges.CreateDateRaw)
 	if err != nil {
 		return nil, err
 	}
-	ranges.CreateDateParsed = d
+	ranges.CreateDate = d
 
-	s, err := strconv.ParseInt(ranges.SyncToken, 10, 64)
+	s, err := strconv.ParseInt(ranges.SyncTokenRaw, 10, 64)
 	if err != nil {
 		return nil, err
 	}
-	ranges.SyncTokenParsed = time.Unix(s, 0).UTC()
+	ranges.SyncToken = time.Unix(s, 0).UTC()
 
-	if ranges.CreateDateParsed != ranges.SyncTokenParsed {
+	if ranges.CreateDate != ranges.SyncToken {
 		return nil, fmt.Errorf(
 			"syncToken and createDate do not match: %s, %s",
-			ranges.SyncTokenParsed,
-			ranges.CreateDateParsed,
+			ranges.SyncToken,
+			ranges.CreateDate,
 		)
 	}
 
