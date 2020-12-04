@@ -1,10 +1,11 @@
 package ranges
 
 import (
+	"encoding/json"
 	"fmt"
-	"ioutil"
-	"json"
+	"io/ioutil"
 	"net/http"
+	"strconv"
 	"time"
 )
 
@@ -12,14 +13,15 @@ const url string = "https://ip-ranges.amazonaws.com/ip-ranges.json"
 
 // Ranges represents an https://ip-ranges.amazonaws.com/ip-ranges.json document
 type Ranges struct {
-	CreateDate    time.Time
-	CreateDateRaw string `json::createDate`
-	Prefixes      []Prefix
-	SyncToken     time.Time
-	SyncTokenRaw  int64 `json:syncToken`
+	CreateDate       string `json:createDate`
+	CreateDateParsed time.Time
+	Prefixes         []Prefix `json:prefixes`
+	IPv6Prefixes     []Prefix `json:ipv6_prefixes`
+	SyncToken        string   `json:syncToken`
+	SyncTokenParsed  time.Time
 }
 
-// Prefix holds the detail of a given AWS IPv4 prefix
+// Prefix holds the detail of a given AWS prefix
 type Prefix struct {
 	IPPrefix           string `json:ip_prefix`
 	Region             string `json:region`
@@ -27,6 +29,7 @@ type Prefix struct {
 	NetworkBorderGroup string `json:network_border_group`
 }
 
+//New is a constructor for Ranges
 func New(client *http.Client) (*Ranges, error) {
 	var ranges Ranges
 
@@ -46,19 +49,23 @@ func New(client *http.Client) (*Ranges, error) {
 		return nil, err
 	}
 
-	d, err := parseCreateDate(&ranges.CreateDateRaw)
+	d, err := parseCreateDate(&ranges.CreateDate)
 	if err != nil {
 		return nil, err
 	}
-	ranges.CreateDate = d
+	ranges.CreateDateParsed = d
 
-	ranges.SyncToken = time.Unix(ranges.SyncTokenRaw, 0)
+	s, err := strconv.ParseInt(ranges.SyncToken, 10, 64)
+	if err != nil {
+		return nil, err
+	}
+	ranges.SyncTokenParsed = time.Unix(s, 0).UTC()
 
-	if ranges.CreateDate != ranges.SyncToken {
+	if ranges.CreateDateParsed != ranges.SyncTokenParsed {
 		return nil, fmt.Errorf(
 			"syncToken and createDate do not match: %s, %s",
-			ranges.SyncToken,
-			ranges.CreateDate,
+			ranges.SyncTokenParsed,
+			ranges.CreateDateParsed,
 		)
 	}
 
@@ -66,7 +73,7 @@ func New(client *http.Client) (*Ranges, error) {
 }
 
 func parseCreateDate(s *string) (time.Time, error) {
-	const createDateFormat = "2006-01-02-05-04-15"
+	const createDateFormat = "2006-01-02-15-04-05"
 	t, err := time.Parse(createDateFormat, *s)
 	return t, err
 }
