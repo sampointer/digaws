@@ -38,9 +38,9 @@ type PrefixIPv6 struct {
 	NetworkBorderGroup string `json:"network_border_group"`
 }
 
-// FindForIPv4 returns the Prefix structs that contain a range that includes the
+// LookupIPv4 returns the Prefix structs that contain a range that includes the
 // passed IPv4 address
-func (r *Ranges) FindForIPv4(ip net.IP) ([]PrefixIPv4, error) {
+func (r *Ranges) LookupIPv4(ip net.IP) ([]PrefixIPv4, error) {
 	var results []PrefixIPv4
 
 	for _, p := range r.PrefixesIPv4 {
@@ -57,9 +57,9 @@ func (r *Ranges) FindForIPv4(ip net.IP) ([]PrefixIPv4, error) {
 	return results, nil
 }
 
-// FindForIPv6 returns the Prefix structs that contain a range that includes the
+// LookupIPv6 returns the Prefix structs that contain a range that includes the
 // passed IPv6 address
-func (r *Ranges) FindForIPv6(ip net.IP) ([]PrefixIPv6, error) {
+func (r *Ranges) LookupIPv6(ip net.IP) ([]PrefixIPv6, error) {
 	var results []PrefixIPv6
 
 	for _, p := range r.PrefixesIPv6 {

@@ -30,14 +30,14 @@ func TestRanges(t *testing.T) {
 		}
 
 		ip := net.ParseIP("52.94.76.5")
-		results, err := ranges.FindForIPv4(ip)
+		results, err := ranges.LookupIPv4(ip)
 		require.NoError(t, err)
 		require.Equal(t, prefix, results[0])
 	})
 
-	t.Run("returns no Prefix struct for invalid IPv4 address", func(t *testing.T) {
+	t.Run("returns no Prefix struct for non-AWS IPv4 address", func(t *testing.T) {
 		ip := net.ParseIP("1.2.3.4")
-		results, err := ranges.FindForIPv4(ip)
+		results, err := ranges.LookupIPv4(ip)
 		require.NoError(t, err)
 		require.Zero(t, len(results))
 	})
@@ -51,14 +51,14 @@ func TestRanges(t *testing.T) {
 		}
 
 		ip := net.ParseIP("2a05:d07a:a0ff:ffff:ffff:ffff:ffff:aaaa")
-		results, err := ranges.FindForIPv6(ip)
+		results, err := ranges.LookupIPv6(ip)
 		require.NoError(t, err)
 		require.Equal(t, prefix, results[0])
 	})
 
-	t.Run("returns no Prefix struct for invalid IPv6 address", func(t *testing.T) {
+	t.Run("returns no Prefix struct for non-AWS IPv6 address", func(t *testing.T) {
 		ip := net.ParseIP("1:2:3:4:5")
-		results, err := ranges.FindForIPv6(ip)
+		results, err := ranges.LookupIPv6(ip)
 		require.NoError(t, err)
 		require.Zero(t, len(results))
 	})
