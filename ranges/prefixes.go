@@ -1,11 +1,13 @@
 package ranges
 
 import (
+	"encoding/json"
 	"fmt"
 )
 
 // Prefix is an interface that both IPv4 and IPv6 structs implement
 type Prefix interface {
+	JSON() (string, error)
 	String() string
 }
 
@@ -28,6 +30,15 @@ func (p PrefixIPv4) String() string {
 	)
 }
 
+//JSON returns a string of JSON representing the Prefix
+func (p PrefixIPv4) JSON() (string, error) {
+	out, err := json.Marshal(p)
+	if err != nil {
+		return "", err
+	}
+	return string(out), nil
+}
+
 // PrefixIPv6 holds the detail of a given AWS IPv6 prefix
 type PrefixIPv6 struct {
 	IPPrefix           string `json:"ipv6_prefix"`
@@ -45,4 +56,13 @@ func (p PrefixIPv6) String() string {
 		p.Service,
 		p.NetworkBorderGroup,
 	)
+}
+
+//JSON returns a string of JSON representing the Prefix
+func (p PrefixIPv6) JSON() (string, error) {
+	out, err := json.Marshal(p)
+	if err != nil {
+		return "", err
+	}
+	return string(out), nil
 }

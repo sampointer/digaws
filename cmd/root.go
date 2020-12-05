@@ -28,6 +28,7 @@ import (
 )
 
 var cfgFile string
+var format string
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -49,7 +50,20 @@ information.`,
 			}
 
 			for _, p := range res {
-				fmt.Println(p)
+				switch format {
+				case "text":
+					fmt.Println(p)
+				case "json":
+					out, err := p.JSON()
+					if err != nil {
+						fmt.Println(err)
+						os.Exit(3)
+					}
+					fmt.Println(out)
+				default:
+					fmt.Println("invalid format")
+					os.Exit(2)
+				}
 			}
 		}
 	},
@@ -70,8 +84,8 @@ func init() {
 	// Here you will define your flags and configuration settings.
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
-
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.digaws.yaml)")
+	rootCmd.Flags().StringVarP(&format, "format", "f", "text", "one of: text|json")
 }
 
 // initConfig reads in config file and ENV variables if set.

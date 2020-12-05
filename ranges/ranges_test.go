@@ -9,6 +9,7 @@ import (
 )
 
 func TestRanges(t *testing.T) {
+	t.Parallel()
 	doc, err := os.Open("../test/ip-ranges.json")
 	require.NoError(t, err)
 
@@ -41,6 +42,7 @@ func TestRanges(t *testing.T) {
 	})
 
 	t.Run("returns no Prefix struct for non-AWS IPv4 address", func(t *testing.T) {
+		t.Parallel()
 		ip := net.ParseIP("1.2.3.4")
 		results, err := ranges.LookupIPv4(ip)
 		require.NoError(t, err)
@@ -48,6 +50,7 @@ func TestRanges(t *testing.T) {
 	})
 
 	t.Run("returns a Prefix struct for an IPv6 address", func(t *testing.T) {
+		t.Parallel()
 		prefix := PrefixIPv6{
 			IPPrefix:           "2a05:d07a:a000::/40",
 			Region:             "eu-south-1",
@@ -62,6 +65,7 @@ func TestRanges(t *testing.T) {
 	})
 
 	t.Run("returns no Prefix struct for non-AWS IPv6 address", func(t *testing.T) {
+		t.Parallel()
 		ip := net.ParseIP("1:2:3:4:5")
 		results, err := ranges.LookupIPv6(ip)
 		require.NoError(t, err)

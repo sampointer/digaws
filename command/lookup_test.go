@@ -11,7 +11,9 @@ const ipv4 = "52.94.76.5"
 const ipv6 = "2a05:d07a:a0ff:ffff:ffff:ffff:ffff:aaaa"
 
 func TestLookup(t *testing.T) {
+	t.Parallel()
 	t.Run("looks up IPv4 address", func(t *testing.T) {
+		t.Parallel()
 		prefix := ranges.PrefixIPv4{
 			IPPrefix:           "52.94.76.0/22",
 			Region:             "us-west-2",
@@ -26,6 +28,7 @@ func TestLookup(t *testing.T) {
 	})
 
 	t.Run("looks up IPv6 address", func(t *testing.T) {
+		t.Parallel()
 		prefix1 := ranges.PrefixIPv6{
 			IPPrefix:           "2a05:d07a:a000::/40",
 			Region:             "eu-south-1",
