@@ -10,8 +10,6 @@ import (
 	"time"
 )
 
-const url string = "https://ip-ranges.amazonaws.com/ip-ranges.json"
-
 // Ranges represents an https://ip-ranges.amazonaws.com/ip-ranges.json document
 type Ranges struct {
 	CreateDate    time.Time    `json:"-"`
@@ -22,26 +20,10 @@ type Ranges struct {
 	SyncTokenRaw  string       `json:"syncToken"`
 }
 
-// PrefixIPv4 holds the detail of a given AWS IPv4 prefix
-type PrefixIPv4 struct {
-	IPPrefix           string `json:"ip_prefix"`
-	Region             string `json:"region"`
-	Service            string `json:"service"`
-	NetworkBorderGroup string `json:"network_border_group"`
-}
-
-// PrefixIPv6 holds the detail of a given AWS IPv6 prefix
-type PrefixIPv6 struct {
-	IPPrefix           string `json:"ipv6_prefix"`
-	Region             string `json:"region"`
-	Service            string `json:"service"`
-	NetworkBorderGroup string `json:"network_border_group"`
-}
-
 // LookupIPv4 returns the Prefix structs that contain a range that includes the
 // passed IPv4 address
-func (r *Ranges) LookupIPv4(ip net.IP) ([]PrefixIPv4, error) {
-	var results []PrefixIPv4
+func (r *Ranges) LookupIPv4(ip net.IP) ([]Prefix, error) {
+	var results []Prefix
 
 	for _, p := range r.PrefixesIPv4 {
 		_, pIPNet, err := net.ParseCIDR(p.IPPrefix)
@@ -59,8 +41,8 @@ func (r *Ranges) LookupIPv4(ip net.IP) ([]PrefixIPv4, error) {
 
 // LookupIPv6 returns the Prefix structs that contain a range that includes the
 // passed IPv6 address
-func (r *Ranges) LookupIPv6(ip net.IP) ([]PrefixIPv6, error) {
-	var results []PrefixIPv6
+func (r *Ranges) LookupIPv6(ip net.IP) ([]Prefix, error) {
+	var results []Prefix
 
 	for _, p := range r.PrefixesIPv6 {
 		_, pIPNet, err := net.ParseCIDR(p.IPPrefix)
