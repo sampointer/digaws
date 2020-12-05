@@ -2,26 +2,31 @@ package ranges
 
 import (
 	"net"
-	"net/http"
+	"os"
 	"testing"
 
 	"github.com/stretchr/testify/require"
 )
 
 func TestRanges(t *testing.T) {
-	client := new(http.Client)
-	ranges, err := New(client)
+	doc, err := os.Open("../test/ip-ranges.json")
+	require.NoError(t, err)
+
+	ranges, err := New(doc)
 	require.NoError(t, err)
 
 	t.Run("has IPv4 prefixes", func(t *testing.T) {
+		t.Parallel()
 		require.NotZero(t, ranges.PrefixesIPv4, "should have 1 or more prefixes")
 	})
 
 	t.Run("has IPv6 prefixes", func(t *testing.T) {
+		t.Parallel()
 		require.NotZero(t, ranges.PrefixesIPv6, "should have 1 or more prefixes")
 	})
 
 	t.Run("returns a Prefix struct for an IPv4 address", func(t *testing.T) {
+		t.Parallel()
 		prefix := PrefixIPv4{
 			IPPrefix:           "52.94.76.0/22",
 			Region:             "us-west-2",

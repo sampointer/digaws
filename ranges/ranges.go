@@ -3,9 +3,9 @@ package ranges
 import (
 	"encoding/json"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"net"
-	"net/http"
 	"strconv"
 	"time"
 )
@@ -77,21 +77,15 @@ func (r *Ranges) LookupIPv6(ip net.IP) ([]PrefixIPv6, error) {
 }
 
 //New is a constructor for Ranges
-func New(client *http.Client) (*Ranges, error) {
+func New(r io.Reader) (*Ranges, error) {
 	var ranges Ranges
 
-	res, err := client.Get(url)
+	doc, err := ioutil.ReadAll(r)
 	if err != nil {
 		return nil, err
 	}
 
-	defer res.Body.Close()
-	body, err := ioutil.ReadAll(res.Body)
-	if err != nil {
-		return nil, err
-	}
-
-	err = json.Unmarshal(body, &ranges)
+	err = json.Unmarshal(doc, &ranges)
 	if err != nil {
 		return nil, err
 	}
