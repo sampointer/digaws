@@ -56,11 +56,10 @@ func TestRanges(t *testing.T) {
 	//		require.Equal(t, prefix, results[0])
 	//	})
 	//
-	//	t.Run("returns no Prefix struct for invalid IPv6 address", func(t *testing.T) {
-	//		ip := net.ParseIP("1:2:3:4:5")
-	//		results, err := ranges.FindForIPv6(ip)
-	//		require.NoError(t, err)
-	//		require.Zero(t, len(results))
-	//	})
-	//
+	t.Run("returns no Prefix struct for invalid IPv6 address", func(t *testing.T) {
+		ip := net.ParseIP("1:2:3:4:5")
+		results, err := ranges.FindForIPv6(ip)
+		require.NoError(t, err)
+		require.Zero(t, len(results))
+	})
 }
