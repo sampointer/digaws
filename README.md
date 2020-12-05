@@ -3,9 +3,18 @@
 Look-up region and other information for any AWS-owned IP address:
 
 ```bash
-digaws 52.94.76.5
+$ digaws $(dig netflix.com +short)
+prefix: 52.208.0.0/13 region: eu-west-1 service: AMAZON, network_border_group: eu-west-1
+prefix: 52.208.0.0/13 region: eu-west-1 service: EC2, network_border_group: eu-west-1
+prefix: 52.18.0.0/15 region: eu-west-1 service: AMAZON, network_border_group: eu-west-1
+...
+```
 
-digaws 2a05:d07a:a0ff:ffff:ffff:ffff:ffff:aaaa
+```bash
+$ digaws 52.94.76.5 2a05:d07a:a0ff:ffff:ffff:ffff:ffff:aaaa
+prefix: 52.94.76.0/22 region: us-west-2 service: AMAZON, network_border_group: us-west-2
+prefix: 2a05:d07a:a000::/40 region: eu-south-1 service: AMAZON, network_border_group: eu-south-1
+prefix: 2a05:d07a:a000::/40 region: eu-south-1 service: S3, network_border_group: eu-south-1
 ```
 
 ## Installation
@@ -15,14 +24,6 @@ digaws 2a05:d07a:a0ff:ffff:ffff:ffff:ffff:aaaa
 ### Nix
 
 ### Packages
-
-## Usage
-
-By default `digaws` fetches `ip-ranges.json` every time it is executed. If you
-intend on performing batch processing or perhaps want to use a version of the
-file at a specific point in time you can pass the `-i` flag with a path and
-use a locally cached copy. See: `digaws -h` and [the AWS documentation][2] for
-more information.
 
 [1]: https://ip-ranges.amazonaws.com/ip-ranges.json
 [2]: https://docs.aws.amazon.com/general/latest/gr/aws-ip-ranges.html
