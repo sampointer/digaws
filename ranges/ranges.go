@@ -57,6 +57,25 @@ func (r *Ranges) FindForIPv4(ip net.IP) ([]PrefixIPv4, error) {
 	return results, nil
 }
 
+// FindForIPv6 returns the Prefix structs that contain a range that includes the
+// passed IPv6 address
+func (r *Ranges) FindForIPv6(ip net.IP) ([]PrefixIPv6, error) {
+	var results []PrefixIPv6
+
+	for _, p := range r.PrefixesIPv6 {
+		_, pIPNet, err := net.ParseCIDR(p.IPPrefix)
+		if err != nil {
+			return nil, err
+		}
+
+		if pIPNet.Contains(ip) {
+			results = append(results, p)
+		}
+	}
+
+	return results, nil
+}
+
 //New is a constructor for Ranges
 func New(client *http.Client) (*Ranges, error) {
 	var ranges Ranges
