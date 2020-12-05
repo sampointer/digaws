@@ -42,20 +42,20 @@ func TestRanges(t *testing.T) {
 		require.Zero(t, len(results))
 	})
 
-	//	t.Run("returns a Prefix struct for an IPv6 address", func(t *testing.T) {
-	//		prefix := PrefixIPv6{
-	//			IPPrefix:           "2600:1f70:4000::/56",
-	//			Region:             "us-west-2",
-	//			Service:            "AMAZON",
-	//			NetworkBorderGroup: "us-west-2",
-	//		}
-	//
-	//		ip := net.ParseIP("2600:1f70:4000:3:4")
-	//		results, err := ranges.FindForIPv6(ip)
-	//		require.NoError(t, err)
-	//		require.Equal(t, prefix, results[0])
-	//	})
-	//
+	t.Run("returns a Prefix struct for an IPv6 address", func(t *testing.T) {
+		prefix := PrefixIPv6{
+			IPPrefix:           "2a05:d07a:a000::/40",
+			Region:             "eu-south-1",
+			Service:            "AMAZON",
+			NetworkBorderGroup: "eu-south-1",
+		}
+
+		ip := net.ParseIP("2a05:d07a:a0ff:ffff:ffff:ffff:ffff:aaaa")
+		results, err := ranges.FindForIPv6(ip)
+		require.NoError(t, err)
+		require.Equal(t, prefix, results[0])
+	})
+
 	t.Run("returns no Prefix struct for invalid IPv6 address", func(t *testing.T) {
 		ip := net.ParseIP("1:2:3:4:5")
 		results, err := ranges.FindForIPv6(ip)
