@@ -20,8 +20,15 @@ prefix: 2a05:d07a:a000::/40 region: eu-south-1 service: S3, network_border_group
 ## Installation
 
 ### Homebrew
-### Nix
+
+```bash
+brew tap sampointer/digaws
+brew install digaws
+```
+
 ### Packages
+Debian and RPM packages can be found on the [releases][3] page.
 
 [1]: https://ip-ranges.amazonaws.com/ip-ranges.json
 [2]: https://docs.aws.amazon.com/general/latest/gr/aws-ip-ranges.html
+[3]: https://github.com/sampointer/digaws/releases/
