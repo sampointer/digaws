@@ -10,6 +10,7 @@ import (
 
 const url string = "https://ip-ranges.amazonaws.com/ip-ranges.json"
 
+//Lookup returns Prefixes the ranges of which include the passed IP address
 func Lookup(q string) ([]ranges.Prefix, error) {
 	var client http.Client
 	var prefixes []ranges.Prefix
