@@ -7,7 +7,8 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-const ip = "52.94.76.5"
+const ipv4 = "52.94.76.5"
+const ipv6 = "2a05:d07a:a0ff:ffff:ffff:ffff:ffff:aaaa"
 
 func TestLookup(t *testing.T) {
 	t.Run("looks up IPv4 address", func(t *testing.T) {
@@ -18,7 +19,21 @@ func TestLookup(t *testing.T) {
 			NetworkBorderGroup: "us-west-2",
 		}
 
-		p, err := Lookup(ip)
+		p, err := Lookup(ipv4)
+		require.NoError(t, err)
+		require.Equal(t, 1, len(p))
+		require.Equal(t, prefix, p[0])
+	})
+
+	t.Run("looks up IPv6 address", func(t *testing.T) {
+		prefix := ranges.PrefixIPv6{
+			IPPrefix:           "2a05:d07a:a000::/40",
+			Region:             "eu-south-1",
+			Service:            "AMAZON",
+			NetworkBorderGroup: "eu-south-1",
+		}
+
+		p, err := Lookup(ipv6)
 		require.NoError(t, err)
 		require.Equal(t, 1, len(p))
 		require.Equal(t, prefix, p[0])

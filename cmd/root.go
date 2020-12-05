@@ -23,6 +23,8 @@ import (
 
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/viper"
+
+	"github.com/sampointer/digaws/command"
 )
 
 var cfgFile string
@@ -38,7 +40,19 @@ See https://docs.aws.amazon.com/general/latest/gr/aws-ip-ranges.html for more
 information.`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
-	Run: func(cmd *cobra.Command, args []string) {},
+	Run: func(cmd *cobra.Command, args []string) {
+		for _, arg := range args {
+			res, err := command.Lookup(arg)
+			if err != nil {
+				fmt.Println(err)
+				return
+			}
+
+			for _, p := range res {
+				fmt.Println(p)
+			}
+		}
+	},
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
