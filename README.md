@@ -20,9 +20,7 @@ prefix: 2a05:d07a:a000::/40 region: eu-south-1 service: S3, network_border_group
 ## Installation
 
 ### Homebrew
-
 ### Nix
-
 ### Packages
 
 [1]: https://ip-ranges.amazonaws.com/ip-ranges.json

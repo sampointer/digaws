@@ -1,0 +1,55 @@
+# Main build and github release
+before:
+  hooks:
+    - go mod tidy
+    - go vet ./...
+    - go generate ./...
+    - go test ./...
+builds:
+- env:
+  - CGO_ENABLED=0
+archives:
+- replacements:
+    darwin: Darwin
+    linux: Linux
+    windows: Windows
+    386: i386
+    amd64: x86_64
+checksum:
+  name_template: 'checksums.txt'
+snapshot:
+  name_template: "{{ .Tag }}-next"
+changelog:
+  sort: asc
+  filters:
+    exclude:
+    - '^docs:'
+    - '^test:'
+
+# Homebrew
+brews:
+  -
+    github:
+      owner: sampointer
+      name: homebrew-digaws
+
+    commit_author:
+      name: goreleaserbot
+      email: sam@outsidethe.net
+
+    folder: Formula
+    homepage: "https://github.com/sampointer/digaws"
+    description: "Look up region and other information for any AWS IP address"
+    install : |
+      bin.install "digaws"
+
+# Packages
+nfpms:
+  -
+    formats:
+      - deb
+      - rpm
+    vendor: "Sam Pointer"
+    homepage: "https://github.com/sampointer/digaws"
+    maintainer: "Sam Pointer <sam@outsidethe.net>"
+    description: "Look up region and other information for any AWS IP address"
