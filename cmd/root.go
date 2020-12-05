@@ -31,7 +31,7 @@ var cfgFile string
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "digaws",
+	Use:   "digaws ipv4_address|ipv6_address ...",
 	Short: "look up AWS IP address details",
 	Long: `Intelligently parses the current AWS ip-ranges.json to enable you to
 look up details of any specific IP address.
@@ -72,10 +72,6 @@ func init() {
 	// will be global for your application.
 
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.digaws.yaml)")
-
-	// Cobra also supports local flags, which will only run
-	// when this action is called directly.
-	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
 
 // initConfig reads in config file and ENV variables if set.
