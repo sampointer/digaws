@@ -22,7 +22,7 @@ type PrefixIPv4 struct {
 //String returns a column-format representation of the Prefix
 func (p PrefixIPv4) String() string {
 	return fmt.Sprintf(
-		"prefix: %s region: %s service: %s, network_border_group: %s",
+		"prefix: %s region: %s service: %s network_border_group: %s",
 		p.IPPrefix,
 		p.Region,
 		p.Service,
@@ -50,7 +50,7 @@ type PrefixIPv6 struct {
 //String returns a column-format representation of the Prefix
 func (p PrefixIPv6) String() string {
 	return fmt.Sprintf(
-		"prefix: %s region: %s service: %s, network_border_group: %s",
+		"prefix: %s region: %s service: %s network_border_group: %s",
 		p.IPPrefix,
 		p.Region,
 		p.Service,

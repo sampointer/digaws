@@ -26,7 +26,7 @@ func TestPrefixString(t *testing.T) {
 		t.Parallel()
 		require.Equal(
 			t,
-			"prefix: 52.94.76.0/22 region: us-west-2 service: AMAZON, network_border_group: us-west-2",
+			"prefix: 52.94.76.0/22 region: us-west-2 service: AMAZON network_border_group: us-west-2",
 			prefixIPv4.String(),
 		)
 	})
@@ -35,7 +35,7 @@ func TestPrefixString(t *testing.T) {
 		t.Parallel()
 		require.Equal(
 			t,
-			"prefix: 2a05:d07a:a000::/40 region: eu-south-1 service: AMAZON, network_border_group: eu-south-1",
+			"prefix: 2a05:d07a:a000::/40 region: eu-south-1 service: AMAZON network_border_group: eu-south-1",
 			prefixIPv6.String(),
 		)
 	})
