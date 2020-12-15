@@ -32,3 +32,9 @@ Debian and RPM packages can be found on the [releases][3] page.
 [1]: https://ip-ranges.amazonaws.com/ip-ranges.json
 [2]: https://docs.aws.amazon.com/general/latest/gr/aws-ip-ranges.html
 [3]: https://github.com/sampointer/digaws/releases/
+
+### Docker
+
+git clone
+docker build -t digaws .
+docker run --rm -it digaws /app/main $(dig netflix.com +short)
