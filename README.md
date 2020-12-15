@@ -35,6 +35,8 @@ Debian and RPM packages can be found on the [releases][3] page.
 
 ### Docker
 
-git clone
+```bash
+git clone https://github.com/sampointer/digaws; cd digaws
 docker build -t digaws .
-docker run --rm -it digaws /app/main $(dig netflix.com +short)
+docker run --rm -it digaws $(dig netflix.com +short)
+```
