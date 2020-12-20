@@ -1,4 +1,4 @@
-# digaws [![GoDoc](https://godoc.org/github.com/sampointer/digaws?status.svg)](https://godoc.org/github.com/sampointer/digaws) [![Go Report Card](https://goreportcard.com/badge/github.com/sampointer/digaws)](https://goreportcard.com/report/github.com/sampointer/digaws)
+# digaws [![GoDoc](https://godoc.org/github.com/sampointer/digaws?status.svg)](https://godoc.org/github.com/sampointer/digaws) [![Go Report Card](https://goreportcard.com/badge/github.com/sampointer/digaws)](https://goreportcard.com/report/github.com/sampointer/digaws) ![goreleaser](https://github.com/sampointer/digaws/workflows/goreleaser/badge.svg)
 
 Look-up region and other information for any AWS-owned IP address:
 
