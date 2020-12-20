@@ -10,7 +10,7 @@ import (
 
 func TestRanges(t *testing.T) {
 	t.Parallel()
-	doc, err := os.Open("../test/ip-ranges.json")
+	doc, err := os.Open("../testdata/ip-ranges.json")
 	require.NoError(t, err)
 
 	ranges, err := New(doc)
