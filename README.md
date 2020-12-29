@@ -41,6 +41,7 @@ docker run --rm -it digaws $(dig netflix.com +short)
 | Company  | Tool        |
 |----------|-------------|
 | AWS      | [digaws][a] |
+| Azure    | [digaz][z]  |
 | Google   | [digg][g]   |
 
 [1]: https://ip-ranges.amazonaws.com/ip-ranges.json
@@ -49,3 +50,4 @@ docker run --rm -it digaws $(dig netflix.com +short)
 
 [a]: https://github.com/sampointer/digaws
 [g]: https://github.com/sampointer/digg
+[z]: https://github.com/sampointer/digaz
