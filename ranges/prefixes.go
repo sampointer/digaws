@@ -7,6 +7,7 @@ import (
 
 // Prefix is an interface that both IPv4 and IPv6 structs implement
 type Prefix interface {
+	GetRegion() string
 	JSON() (string, error)
 	String() string
 }
@@ -39,6 +40,12 @@ func (p PrefixIPv4) JSON() (string, error) {
 	return string(out), nil
 }
 
+//GetRegion is an accessor method for the Region field, present in order that
+//the Prefix interface can expose it.
+func (p PrefixIPv4) GetRegion() string {
+	return p.Region
+}
+
 // PrefixIPv6 holds the detail of a given AWS IPv6 prefix
 type PrefixIPv6 struct {
 	IPPrefix           string `json:"ipv6_prefix"`
@@ -65,4 +72,10 @@ func (p PrefixIPv6) JSON() (string, error) {
 		return "", err
 	}
 	return string(out), nil
+}
+
+//GetRegion is an accessor method for the Region field, present in order that
+//the Prefix interface can expose it.
+func (p PrefixIPv6) GetRegion() string {
+	return p.Region
 }

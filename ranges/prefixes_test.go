@@ -65,3 +65,16 @@ func TestPrefixJSON(t *testing.T) {
 		)
 	})
 }
+
+func TestPrefixGetRegion(t *testing.T) {
+	t.Parallel()
+	t.Run("IPv4", func(t *testing.T) {
+		t.Parallel()
+		require.Equal(t, prefixIPv4.GetRegion(), prefixIPv4.Region)
+	})
+
+	t.Run("IPv6", func(t *testing.T) {
+		t.Parallel()
+		require.Equal(t, prefixIPv6.GetRegion(), prefixIPv6.Region)
+	})
+}
