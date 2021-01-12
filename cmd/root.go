@@ -25,6 +25,7 @@ import (
 	"github.com/spf13/viper"
 
 	"github.com/sampointer/digaws/command"
+	"github.com/sampointer/digaws/manifest"
 )
 
 var cfgFile string
@@ -43,7 +44,7 @@ information.`,
 	// has an action associated with it:
 	Run: func(cmd *cobra.Command, args []string) {
 		for _, arg := range args {
-			res, err := command.Lookup(arg)
+			res, err := command.Lookup(arg, manifest.GetManifest())
 			if err != nil {
 				fmt.Println(err)
 				return
