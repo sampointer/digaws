@@ -17,6 +17,8 @@ prefix: 2a05:d07a:a000::/40 region: eu-south-1 service: AMAZON, network_border_g
 prefix: 2a05:d07a:a000::/40 region: eu-south-1 service: S3, network_border_group: eu-south-1
 ```
 
+An online version of this tool can be found at [runson.cloud][r].
+
 ## Installation
 
 ### Homebrew
@@ -51,3 +53,4 @@ docker run --rm -it digaws $(dig netflix.com +short)
 [a]: https://github.com/sampointer/digaws
 [g]: https://github.com/sampointer/digg
 [z]: https://github.com/sampointer/digaz
+[r]: https://runson.cloud
