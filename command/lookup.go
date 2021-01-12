@@ -3,24 +3,18 @@ package command
 import (
 	"github.com/sampointer/digaws/ranges"
 
+	"io"
 	"net"
-	"net/http"
 	"strings"
 )
 
 const url string = "https://ip-ranges.amazonaws.com/ip-ranges.json"
 
 //Lookup returns Prefixes the ranges of which include the passed IP address
-func Lookup(q string) ([]ranges.Prefix, error) {
-	var client http.Client
+func Lookup(q string, doc io.Reader) ([]ranges.Prefix, error) {
 	var prefixes []ranges.Prefix
 
-	resp, err := client.Get(url)
-	if err != nil {
-		return nil, err
-	}
-
-	r, err := ranges.New(resp.Body)
+	r, err := ranges.New(doc)
 	if err != nil {
 		return nil, err
 	}
