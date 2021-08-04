@@ -1,9 +1,9 @@
 package command
 
 import (
+	"os"
 	"testing"
 
-	"github.com/sampointer/digaws/manifest"
 	"github.com/sampointer/digaws/ranges"
 	"github.com/stretchr/testify/require"
 )
@@ -22,7 +22,11 @@ func TestLookup(t *testing.T) {
 			NetworkBorderGroup: "us-west-2",
 		}
 
-		p, err := Lookup(ipv4, manifest.GetManifest())
+		mf, err := os.Open("../testdata/ip-ranges.json")
+		require.NoError(t, err)
+		defer mf.Close()
+
+		p, err := Lookup(ipv4, mf)
 		require.NoError(t, err)
 		require.Equal(t, 1, len(p))
 		require.Equal(t, prefix, p[0])
@@ -43,7 +47,11 @@ func TestLookup(t *testing.T) {
 			NetworkBorderGroup: "eu-south-1",
 		}
 
-		p, err := Lookup(ipv6, manifest.GetManifest())
+		mf, err := os.Open("../testdata/ip-ranges.json")
+		require.NoError(t, err)
+		defer mf.Close()
+
+		p, err := Lookup(ipv6, mf)
 		require.NoError(t, err)
 		require.Equal(t, 2, len(p))
 		require.Equal(t, prefix1, p[0])
