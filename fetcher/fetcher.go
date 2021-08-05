@@ -9,8 +9,8 @@ const url string = "https://ip-ranges.amazonaws.com/ip-ranges.json"
 
 //Fetch downloads the ip ranages
 func Fetch() (io.Reader, error) {
-	var client http.Client
 	var blank io.Reader
+	var client http.Client
 
 	res, err := client.Get(url)
 	if err != nil {
